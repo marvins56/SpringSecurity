@@ -1,6 +1,7 @@
 package com.example.SpringSecurity.config;
 
 import java.security.Key;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,11 @@ public class JwtService {
 	public String extractUsername(String token) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public <T> T extractClaim(String  token, Function<Claims,T> claimsRessolver) {
+		final Claims claims = extractAllClaims(token);
+		
+		return claimsRessolver.apply(claims);
 	}
 
 	
