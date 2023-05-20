@@ -1,12 +1,17 @@
 package com.example.SpringSecurity.config;
 
 import java.security.Key;
+import java.util.Date;
+import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
@@ -17,8 +22,7 @@ public class JwtService {
 	final String SECRET_KEY = "34753778214125432A462D4A614E645267556B58703273357638792F423F4528482B4B6250655368566D597133743677397A24432646294A404E635166546A57"
 		;
 	public String extractUsername(String token) {
-		// TODO Auto-generated method stub
-		return null;
+		return extractClaim(token, Claims:: getSubject);
 	}
 	public <T> T extractClaim(String  token, Function<Claims,T> claimsRessolver) {
 		final Claims claims = extractAllClaims(token);
@@ -26,6 +30,24 @@ public class JwtService {
 		return claimsRessolver.apply(claims);
 	}
 
+	public String generateToken(Map<String,Object> extractClaims, UserDetails userDetails) {
+		
+		return Jwts.builder()
+				.setClaims(extractClaims)
+				.setSubject(userDetails.getUsername())
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24
+						))
+				.signWith(getSignInKey(), SignatureAlgorithm.HS512)
+				.compact();		
+		
+	}
+	
+	public String generateToken(UserDetails userDetails) {
+		return generateToken(new HashMap<>(), userDetails);
+		
+	}
+	//method to validatet  a token
 	
 	//extract all claims
 	
