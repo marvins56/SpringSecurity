@@ -48,7 +48,21 @@ public class JwtService {
 		
 	}
 	//method to validatet  a token
+	public boolean isTokenValid(String token, UserDetails userDetails) {
+		final String username = extractUsername(token);
+		return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+		
+	}
+	private boolean isTokenExpired(String token) {
+		
+		return extractExpiration(token).before(new Date());
+	}
 	
+	//extract expirattion date
+	private Date extractExpiration(String token) {
+		
+		return extractClaim(token, Claims::getExpiration);
+	}
 	//extract all claims
 	
 	private Claims extractAllClaims(String token) {
