@@ -81,4 +81,20 @@ public class User implements UserDetails{
 		return true;
 	}
 
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLasttname() {
+		return lasttname;
+	}
+
+	public void setLasttname(String lasttname) {
+		this.lasttname = lasttname;
+	}
+
 }

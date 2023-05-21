@@ -1,5 +1,6 @@
 package com.example.SpringSecurity.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,13 +16,15 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-	private final JwtAuthenticationFilter jwtAuthFilter;
-	private final AuthenticationProvider authenticationProvider;
+	@Autowired
+	private JwtAuthenticationFilter jwtAuthFilter;
+	@Autowired
+	private  AuthenticationProvider authenticationProvider;
 
-	@Bean
+	@Bean 
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable() // choosing path and urls to ssecure
-				.authorizeHttpRequests().requestMatchers("") // permits all
+				.authorizeHttpRequests().requestMatchers("/api/v1/auth/**") // permits all
 				.permitAll().anyRequest().authenticated().and() // configure session management
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // creates new sessision for
 																							// each request
