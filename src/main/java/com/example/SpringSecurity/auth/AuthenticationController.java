@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.SpringSecurity.auth.requests.AuthenticationRequest;
+import com.example.SpringSecurity.auth.requests.RegisterRequest;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,7 +25,7 @@ public class AuthenticationController {
 	
 	//auth
 	@PostMapping("/authenticate")
-	public ResponseEntity<AuthenticationResponse> register( @RequestBody AuthenticationRequest request){
+	public ResponseEntity<AuthenticationResponse> authenticate( @RequestBody AuthenticationRequest request){
 		
 	}
 }

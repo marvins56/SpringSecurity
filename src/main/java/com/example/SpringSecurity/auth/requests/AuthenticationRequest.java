@@ -1,4 +1,4 @@
-package com.example.SpringSecurity.auth;
+package com.example.SpringSecurity.auth.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
+public class AuthenticationRequest {
 
-public class AuthenticationResponse {
+	private String email;
 	
-	private String token;
-	
-
+	private String password;
 }
