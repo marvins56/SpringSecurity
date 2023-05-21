@@ -19,22 +19,15 @@ public class SecurityConfiguration {
 	private final AuthenticationProvider authenticationProvider;
 
 	@Bean
-	public SecurityFilterChain  securityFilterChain(HttpSecurity http) throws Exception{
-		http
-		.csrf()
-		.disable() //choosing path and urls to ssecure
-		.authorizeHttpRequests()
-		.requestMatchers("") //permits all
-		.permitAll()
-		.anyRequest()
-		.authenticated()
-		.and() //configure session management
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS) //creates new sessision for each request
-		.and()
-		.authenticationProvider(authenticationProvider)
-		.addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class);
-		
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf().disable() // choosing path and urls to ssecure
+				.authorizeHttpRequests().requestMatchers("") // permits all
+				.permitAll().anyRequest().authenticated().and() // configure session management
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // creates new sessision for
+																							// each request
+				.and().authenticationProvider(authenticationProvider)
+				.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
 		return http.build();
 	}
 }
